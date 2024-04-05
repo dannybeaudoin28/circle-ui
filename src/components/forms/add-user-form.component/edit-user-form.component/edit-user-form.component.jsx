@@ -1,9 +1,10 @@
+import './edit-user-form.styles.css';
+
 import { useState } from 'react';
+
 import axios from 'axios';
 
-import './add-user-form.styles.css';
-
-const AddUserForm = () => {
+const EditUserForm = ({ userId }) => {
     const baseUrl = 'http://localhost:8888';
 
     const [inputs, setInputs] = useState({});
@@ -16,20 +17,19 @@ const AddUserForm = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        if(inputs.userPassword == inputs.userConfirmPassword) {
-            axios.post(baseUrl + '/users/post-user', inputs)
+        inputs.userId = userId;
+        axios.put(baseUrl + '/users/update-user', inputs)
             .then(response => {
                 console.log(`Added user to records`);
             })
             .catch(error => {
                 console.error(error);
             });
-        }
     }
 
     return (
         <div className='form-box'>
-          <h1>Add a user to records:</h1>
+            <h1>Edit a user:</h1>
             <form onSubmit={handleSubmit}>
                 <label>First Name
                     <input
@@ -71,18 +71,10 @@ const AddUserForm = () => {
                         onChange={handleChange}
                     />
                 </label>
-                <label>Confirm Password
-                    <input
-                        type="password"
-                        name="userConfirmPassword"
-                        value={inputs.userConfirmPassword || ""}
-                        onChange={handleChange}
-                    />
-                </label>
-                <input className='submitButton' type='submit' value='Add User'/>
+                <input className='submitButton' type='submit' value='Save User' />
             </form>
         </div>
     );
 }
 
-export default AddUserForm;
+export default EditUserForm;
