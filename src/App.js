@@ -4,6 +4,7 @@ import './App.css';
 import AdminPanel from './routes/admin-panel/admin-panel.component';
 import Navigation from './routes/navigation/navigation.component';
 import Home from './routes/home/home.component';
+import SignUp from './routes/sign-up/sign-up.component';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Route path='/' element={<Navigation />} >
         <Route path='/home' element={<Home /> } />        
         <Route path='/admin-panel' element={<AdminPanel />} />
+        <Route path='/sign-up' element={<SignUp />} />
       </Route>
     </Routes>
   );

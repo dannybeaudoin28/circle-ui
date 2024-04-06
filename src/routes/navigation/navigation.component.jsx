@@ -26,12 +26,16 @@ const Navigation = () => {
           <NavItem><a href="/">About</a></NavItem>
           <NavItem><a href="/">Services</a></NavItem>
           <NavItem><a href="/admin-panel">Admin</a></NavItem>
+          <NavItem><a href='/login'>Login</a> </NavItem>
+          <NavItem><a href='/sign-up'>Sign Up</a> </NavItem>
         </DesktopNav>
         <MobileNav style={{ display: isMobileNavOpen ? 'flex' : 'none' }}>
           <NavItem><a href="/home">Home</a></NavItem>
           <NavItem><a href="/">About</a></NavItem>
           <NavItem><a href="/">Services</a></NavItem>
           <NavItem><a href="/admin-panel">Admin</a></NavItem>
+          <NavItem><a href='/login'>Login</a> </NavItem>
+          <NavItem><a href='/sign-up'>Sign Up</a> </NavItem>
         </MobileNav>
       </Nav>
       <div>

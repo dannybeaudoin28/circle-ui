@@ -7,11 +7,11 @@ import { useState } from 'react';
 import AddUserForm from '../../components/forms/add-user-form.component/add-user-form.component';
 
 import Modal from 'react-modal';
-import EditUserForm from '../../components/forms/add-user-form.component/edit-user-form.component/edit-user-form.component';
 
 const AdminPanel = () => {
     const [modalIsOpen, setIsOpen] = useState(false);
     const [userId, setUserId] = useState(null);
+    const [user, setUser] = useState({});
 
     const baseUrl = 'http://localhost:8888';
 
@@ -19,8 +19,10 @@ const AdminPanel = () => {
         setIsOpen(false);
     };
 
-    const editUser = (id) => {
-        setUserId(id);
+    const editUser = (userData) => {
+        console.log(userData);
+        setUser(userData);
+        setUserId(userData.userId);
         setIsOpen(true);
     };
 
@@ -53,11 +55,12 @@ const AdminPanel = () => {
                 <Modal
                     isOpen={modalIsOpen}
                     onRequestClose={closeModal}
-                    contentLabel="Example Modal"
+                    contentLabel="Edit User Modal"
                     userId={userId}
+                    user={user}
                 >
                     <button onClick={closeModal}>Cancel</button>
-                    <EditUserForm userId={userId}/>
+                    <AddUserForm closeModal={closeModal} userId={userId} userData={user} formType="edit" />
                 </Modal>
             </div>
             <div>
@@ -84,7 +87,7 @@ const AdminPanel = () => {
                                         <td>{userData.userFName}</td>
                                         <td>{userData.userMiddleInitial}</td>
                                         <td>{userData.userLName}</td>
-                                        <td><button onClick={() => editUser(userData.userId)}>Edit</button></td>
+                                        <td><button onClick={() => editUser(userData)}>Edit</button></td>
                                         <td><button onClick={() => deleteUser(userData.userId)}>Delete</button></td>
                                     </tr>
                                 ))}
@@ -92,7 +95,7 @@ const AdminPanel = () => {
                         </table>
                     </div>
                     <div>
-                        <AddUserForm />
+                        <AddUserForm formType={"add"}/>
                     </div>
                 </div>
             </div>
