@@ -24,7 +24,7 @@ const AddUserForm = ({ formType, userId, closeModal, userData }) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        if (formType === 'add') {
+        if (formType === 'add' || formType === 'create') {
             if (inputs.userFName && inputs.userLName && inputs.userMiddleInitial && inputs.userEmail && inputs.userPassword && inputs.userPassword === inputs.userConfirmPassword) {
                 axios.post(baseUrl + '/users/post-user', inputs)
                     .then(response => {
@@ -67,7 +67,7 @@ const AddUserForm = ({ formType, userId, closeModal, userData }) => {
             } else {
                 alert("Please double check you aren't missing any of the required fields or passwords do not match.");
             }
-        }
+        } 
     }
 
     return (
@@ -85,7 +85,7 @@ const AddUserForm = ({ formType, userId, closeModal, userData }) => {
                         name="userFName"
                         value={inputs.userFName}
                         onChange={handleChange}
-                        placeholder={userData?.userFName || ''}
+                        placeholder={userData?.userFName || 'John'}
                     />
                 </label>
                 <label>Last Name
@@ -94,7 +94,7 @@ const AddUserForm = ({ formType, userId, closeModal, userData }) => {
                         name="userLName"
                         value={inputs.userLName}
                         onChange={handleChange}
-                        placeholder={userData?.userLName || ''}
+                        placeholder={userData?.userLName || 'Doe'}
                     />
                 </label>
                 <label>Middle Initial
@@ -103,7 +103,7 @@ const AddUserForm = ({ formType, userId, closeModal, userData }) => {
                         name="userMiddleInitial"
                         value={inputs.userMiddleInitial}
                         onChange={handleChange}
-                        placeholder={userData?.userMiddleInitial || ''}
+                        placeholder={userData?.userMiddleInitial || 'L'}
                     />
                 </label>
                 <label>Email
@@ -112,7 +112,7 @@ const AddUserForm = ({ formType, userId, closeModal, userData }) => {
                         name="userEmail"
                         value={inputs.userEmail}
                         onChange={handleChange}
-                        placeholder={userData?.userEmail || ''}
+                        placeholder={userData?.userEmail || 'test@test.com'}
                     />
                 </label>
                 <label>Password
@@ -121,7 +121,7 @@ const AddUserForm = ({ formType, userId, closeModal, userData }) => {
                         name="userPassword"
                         value={inputs.userPassword}
                         onChange={handleChange}
-                        placeholder={'Password'}
+                        placeholder={'**********'}
                     />
                 </label>
                 <label>Confirm Password
@@ -130,7 +130,7 @@ const AddUserForm = ({ formType, userId, closeModal, userData }) => {
                         name="userConfirmPassword"
                         value={inputs.userConfirmPassword}
                         onChange={handleChange}
-                        placeholder={'Password'}
+                        placeholder={'**********'}
                     />
                 </label>
                 {formType === 'add' && (
@@ -138,6 +138,9 @@ const AddUserForm = ({ formType, userId, closeModal, userData }) => {
                 )}
                 {formType === 'edit' && (
                     <input className='submitButton' type='submit' value='Save User' />
+                )}
+                {formType === 'create' && (
+                    <input className='submitButton' type='submit' value='Create Account' />
                 )}
             </form>
         </div>
