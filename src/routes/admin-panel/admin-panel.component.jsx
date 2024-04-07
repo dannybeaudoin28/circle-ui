@@ -15,6 +15,17 @@ const AdminPanel = () => {
 
     const baseUrl = 'http://localhost:8888';
 
+    const customStyles = {
+        content: {
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)',
+        },
+    };
+
     const closeModal = () => {
         setIsOpen(false);
     };
@@ -56,8 +67,10 @@ const AdminPanel = () => {
                     isOpen={modalIsOpen}
                     onRequestClose={closeModal}
                     contentLabel="Edit User Modal"
+                    appElement={document.getElementById('root')}
                     userId={userId}
                     user={user}
+                    style={customStyles}
                 >
                     <button onClick={closeModal}>Cancel</button>
                     <AddUserForm closeModal={closeModal} userId={userId} userData={user} formType="edit" />
@@ -66,7 +79,7 @@ const AdminPanel = () => {
             <div>
                 <div className='content'>
                     <div>
-                        <h1>Users:</h1>
+                        <h1>Users</h1>
                         <table className='styled-table'>
                             <thead>
                                 <tr>
@@ -95,7 +108,7 @@ const AdminPanel = () => {
                         </table>
                     </div>
                     <div>
-                        <AddUserForm formType={"add"}/>
+                        <AddUserForm formType={"add"} />
                     </div>
                 </div>
             </div>

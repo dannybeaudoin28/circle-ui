@@ -1,11 +1,18 @@
 import { useState } from 'react';
 import axios from 'axios';
 
+import { useNavigate } from 'react-router-dom';
+
 import './add-user-form.styles.css';
-import { type } from '@testing-library/user-event/dist/type';
+import ImgUploader from '../../img-uploader.component/img-uploader.component';
 
 const AddUserForm = ({ formType, userId, closeModal, userData }) => {
+    const [fileData, setFileData] = useState('');
+    //TODO: send fileData to inputs and post it as blob.
+
     const baseUrl = 'http://localhost:8888';
+
+    const navigate = useNavigate();
 
     const [inputs, setInputs] = useState({
         userFName: '',
@@ -16,6 +23,10 @@ const AddUserForm = ({ formType, userId, closeModal, userData }) => {
         userConfirmPassword: ''
     });
 
+    const handleDataFromImgUploader = (newFileData) => {
+        setFileData(newFileData);
+    };
+
     const handleChange = (event) => {
         const name = event.target.name;
         const value = event.target.value;
@@ -23,9 +34,15 @@ const AddUserForm = ({ formType, userId, closeModal, userData }) => {
     }
 
     const handleSubmit = (event) => {
+        const { userFName, userLName, userMiddleInitial, userEmail, userPassword, userConfirmPassword } = inputs;
+
         event.preventDefault();
         if (formType === 'add' || formType === 'create') {
-            if (inputs.userFName && inputs.userLName && inputs.userMiddleInitial && inputs.userEmail && inputs.userPassword && inputs.userPassword === inputs.userConfirmPassword) {
+            if (userFName && userLName && userMiddleInitial && userEmail && userPassword && userPassword === userConfirmPassword) {
+                if (fileData) {
+                    inputs.userImage = fileData;
+                    console.log(inputs.userImage);
+                }
                 axios.post(baseUrl + '/users/post-user', inputs)
                     .then(response => {
                         console.log(`Added user to records`);
@@ -35,8 +52,12 @@ const AddUserForm = ({ formType, userId, closeModal, userData }) => {
                             userMiddleInitial: '',
                             userEmail: '',
                             userPassword: '',
-                            userConfirmPassword: ''
+                            userConfirmPassword: '',
+                            userImage: '',
                         });
+                        //TODO: Validate response code and redirect or throw error based on code.
+                        if (formType === 'create')
+                            navigate('/home');
                     })
                     .catch(error => {
                         console.error(error);
@@ -46,7 +67,7 @@ const AddUserForm = ({ formType, userId, closeModal, userData }) => {
             }
         } else if (formType === 'edit') {
             console.log('userData is: ', userData);
-            if (inputs.userFName && inputs.userLName && inputs.userMiddleInitial && inputs.userEmail && inputs.userPassword && inputs.userPassword === inputs.userConfirmPassword) {
+            if (userFName && userLName && userMiddleInitial && userEmail && userPassword && userPassword === userConfirmPassword) {
                 inputs.userId = userId;
                 axios.put(baseUrl + '/users/update-user', inputs)
                     .then(response => {
@@ -67,16 +88,19 @@ const AddUserForm = ({ formType, userId, closeModal, userData }) => {
             } else {
                 alert("Please double check you aren't missing any of the required fields or passwords do not match.");
             }
-        } 
+        }
     }
 
     return (
         <div className='form-box'>
             {formType === 'add' && (
-                <h1>Add a user to records:</h1>
+                <h1>Add a user to records</h1>
             )}
             {formType === 'edit' && (
-                <h1>Edit a user:</h1>
+                <h1>Edit a user</h1>
+            )}
+            {formType === 'create' && (
+                <h1>Create an account to find your cirle today!</h1>
             )}
             <form onSubmit={handleSubmit}>
                 <label>First Name
@@ -140,7 +164,12 @@ const AddUserForm = ({ formType, userId, closeModal, userData }) => {
                     <input className='submitButton' type='submit' value='Save User' />
                 )}
                 {formType === 'create' && (
-                    <input className='submitButton' type='submit' value='Create Account' />
+                    <div>
+                        <div>
+                            <ImgUploader handleDataFromImgUploader={handleDataFromImgUploader}/>
+                        </div>
+                        <input className='submitButton' type='submit' value='Create Account' />
+                    </div>
                 )}
             </form>
         </div>
