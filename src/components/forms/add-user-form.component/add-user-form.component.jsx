@@ -8,10 +8,7 @@ import ImgUploader from '../../img-uploader.component/img-uploader.component';
 
 const AddUserForm = ({ formType, userId, closeModal, userData }) => {
     const [fileData, setFileData] = useState('');
-    //TODO: send fileData to inputs and post it as blob.
-
     const baseUrl = 'http://localhost:8888';
-
     const navigate = useNavigate();
 
     const [inputs, setInputs] = useState({
@@ -20,7 +17,8 @@ const AddUserForm = ({ formType, userId, closeModal, userData }) => {
         userMiddleInitial: '',
         userEmail: '',
         userPassword: '',
-        userConfirmPassword: ''
+        userConfirmPassword: '',
+        userImage: '',
     });
 
     const handleDataFromImgUploader = (newFileData) => {
@@ -66,7 +64,6 @@ const AddUserForm = ({ formType, userId, closeModal, userData }) => {
                 alert("Please double check you aren't missing any of the required fields or passwords do not match.");
             }
         } else if (formType === 'edit') {
-            console.log('userData is: ', userData);
             if (userFName && userLName && userMiddleInitial && userEmail && userPassword && userPassword === userConfirmPassword) {
                 inputs.userId = userId;
                 axios.put(baseUrl + '/users/update-user', inputs)
