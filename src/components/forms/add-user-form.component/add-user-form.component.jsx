@@ -11,6 +11,9 @@ const AddUserForm = ({ formType, userId, closeModal, userData }) => {
     const baseUrl = 'http://localhost:8888';
     const navigate = useNavigate();
 
+    const jwtToken = localStorage.getItem('jwtToken');
+    const formattedToken = jwtToken ? 'Bearer ' + jwtToken : '';
+
     const [inputs, setInputs] = useState({
         userFName: '',
         userLName: '',
@@ -41,7 +44,11 @@ const AddUserForm = ({ formType, userId, closeModal, userData }) => {
                     inputs.userImage = fileData;
                     console.log(inputs.userImage);
                 }
-                axios.post(baseUrl + '/users/post-user', inputs)
+                axios.post(baseUrl + '/users/post-user', inputs, {
+                    headers: {
+                        'Authorization': formattedToken,
+                    }
+                })
                     .then(response => {
                         console.log(`Added user to records`);
                         setInputs({
@@ -66,7 +73,11 @@ const AddUserForm = ({ formType, userId, closeModal, userData }) => {
         } else if (formType === 'edit') {
             if (userFName && userLName && userMiddleInitial && userEmail && userPassword && userPassword === userConfirmPassword) {
                 inputs.userId = userId;
-                axios.put(baseUrl + '/users/update-user', inputs)
+                axios.put(baseUrl + '/users/update-user', inputs, {
+                    headers: {
+                        'Authorization': formattedToken,
+                    }
+                })
                     .then(response => {
                         console.log(`Edited user with id: ` + userId);
                         setInputs({
@@ -163,7 +174,7 @@ const AddUserForm = ({ formType, userId, closeModal, userData }) => {
                 {formType === 'create' && (
                     <div>
                         <div>
-                            <ImgUploader handleDataFromImgUploader={handleDataFromImgUploader}/>
+                            <ImgUploader handleDataFromImgUploader={handleDataFromImgUploader} />
                         </div>
                         <input className='submitButton' type='submit' value='Create Account' />
                     </div>

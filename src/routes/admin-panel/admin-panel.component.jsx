@@ -3,7 +3,7 @@ import './admin-panel.styles.css';
 import { useQuery } from '@tanstack/react-query';
 
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AddUserForm from '../../components/forms/add-user-form.component/add-user-form.component';
 
 import Modal from 'react-modal';
@@ -12,6 +12,15 @@ const AdminPanel = () => {
     const [modalIsOpen, setIsOpen] = useState(false);
     const [userId, setUserId] = useState(null);
     const [user, setUser] = useState({});
+    const [users, setUsers] = useState([]);
+
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    const jwtToken = localStorage.getItem('jwtToken');
+    const formattedToken = jwtToken ? 'Bearer ' + jwtToken : '';
+
+    console.log('inside Admin panel token is: ', jwtToken);
 
     const baseUrl = 'http://localhost:8888';
 
@@ -39,22 +48,37 @@ const AdminPanel = () => {
 
     const deleteUser = (id) => {
         console.log('inside deleteUser' + id)
-        axios.delete(baseUrl + '/users/delete-user/' + id)
-            .then(response => {
-                console.log(`Deleted post with ID ${id}`);
-            })
-            .catch(error => {
-                console.error(error);
-            });
+        axios.delete(baseUrl + '/users/delete-user/' + id, {
+            headers: {
+                'Authorization': formattedToken,
+            }
+        }).then(response => {
+            console.log(`Deleted post with ID ${id}`);
+        }).catch(error => {
+            console.error(error);
+        });
     };
 
-    const { isLoading, error, data } = useQuery({
-        queryKey: ['userData'],
-        queryFn: () =>
-            fetch(baseUrl + '/users/get-users').then((res) =>
-                res.json(),
-            ),
-    });
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                console.log('testing')
+                const response = await axios.get(baseUrl + '/users/get-users', {
+                    headers: {
+                        'Authorization': formattedToken,
+                    }
+                });
+                console.log('logging data inside fetchData: ', response);
+                setUsers(response.data);
+                setIsLoading(false);
+            } catch (error) {
+                setError(error.message);
+                setIsLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     if (isLoading) return 'Loading...';
 
@@ -93,7 +117,7 @@ const AdminPanel = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {data.map((userData) => (
+                                {users && users.map((userData) => (
                                     <tr key={userData.userId}>
                                         <td>{userData.userId}</td>
                                         <td>{userData.userEmail}</td>
