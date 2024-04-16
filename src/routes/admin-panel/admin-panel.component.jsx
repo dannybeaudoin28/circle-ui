@@ -20,8 +20,6 @@ const AdminPanel = () => {
     const jwtToken = localStorage.getItem('jwtToken');
     const formattedToken = jwtToken ? 'Bearer ' + jwtToken : '';
 
-    console.log('inside Admin panel token is: ', jwtToken);
-
     const baseUrl = 'http://localhost:8888';
 
     const customStyles = {
