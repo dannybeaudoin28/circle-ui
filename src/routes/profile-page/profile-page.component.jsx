@@ -9,25 +9,30 @@ const ProfilePage = () => {
     const [decodedToken, setDecodedToken] = useState(null);
     const [user, setUser] = useState([]);
 
+    const [showCirclesComponent, setShowCirclesComponent] = useState(false);
+    const [showFriendsComponent, setShowFriendsComponent] = useState(false);
+
     const baseUrl = 'http://localhost:8888';
 
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
+
+
     useEffect(() => {
         // Fetch your JWT from wherever it's stored (e.g., local storage, cookies, etc.)
         const jwt = localStorage.getItem('jwtToken');
-    
-        if (jwt) {
-          // Decode the JWT
-          const decoded = jwtDecode(jwt);
-          setToken(jwt);
-          setDecodedToken(decoded);
-          console.log(decoded);
-        }
-      }, []);
 
-      useEffect(() => {
+        if (jwt) {
+            // Decode the JWT
+            const decoded = jwtDecode(jwt);
+            setToken(jwt);
+            setDecodedToken(decoded);
+            console.log(decoded);
+        }
+    }, []);
+
+    useEffect(() => {
         const fetchData = async () => {
             try {
                 console.log('testing')
@@ -45,16 +50,35 @@ const ProfilePage = () => {
             }
         };
         fetchData();
-      }, [decodedToken]);
+    }, [decodedToken]);
+
+    const handleCircleClick = () => {
+
+    };
+
+    const handleFriendsClick = () => {
+
+    };
 
     return (
-        <>
-            <h1>Welcome {user.userFName + ' ' + user.userMiddleInitial + '. ' + user.userLName}</h1>
-            <p></p>
-            {user.userImage && <img className='img-preview' src={`data:image/jpeg;base64,${user.userImage}`} alt=''/>}
-            <p>Is your email still: {user.userEmail}</p>
-        </>
-    )
+        <div className="profile-background">
+            <div className="profile-container">
+                <h1 className="profile-name">
+                    Welcome {user.userFName} {user.userMiddleInitial}. {user.userLName}
+                </h1>
+                {user.userImage && <img className='profile-image' src={`data:image/jpeg;base64,${user.userImage}`} alt=''/>}
+                <p className="profile-email">
+                    Is your email still: {user.userEmail}?
+                </p>
+            </div>
+            <div className='button-container'>
+                <button onClick={handleCircleClick}>Circles</button>
+                <button onClick={handleFriendsClick}>Friends</button>
+            </div>
+            {/* {showCirclesComponent && <CirclesComponent />} */}
+            {/* {showFriendsComponent && <FriendsComponent />} */}
+        </div>
+    )    
 };
 
 export default ProfilePage;
