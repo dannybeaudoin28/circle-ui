@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import { useNavigate } from 'react-router-dom';
 
-import './add-user-form.styles.css';
+import './add-user-form.styles.scss';
 import ImgUploader from '../../img-uploader.component/img-uploader.component';
 
 const AddUserForm = ({ formType, userId, closeModal, userData }) => {

@@ -1,4 +1,4 @@
-import './admin-panel.styles.css';
+import './admin-panel.styles.scss';
 
 import { useQuery } from '@tanstack/react-query';
 

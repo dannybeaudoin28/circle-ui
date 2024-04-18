@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './img-uploader.styles.css';
+import './img-uploader.styles.scss';
 
 const ImgUploader = ({ handleDataFromImgUploader }) => {
     const [file, setFile] = useState();
