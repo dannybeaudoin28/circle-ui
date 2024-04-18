@@ -4,6 +4,7 @@ import { jwtDecode } from 'jwt-decode';
 
 import axios from 'axios';
 import CirclesComponent from '../../components/circlies.component/circles.component';
+import FriendsComponent from '../../components/friends.component/friends.component';
 
 const ProfilePage = () => {
     const [token, setToken] = useState(null);
@@ -59,7 +60,8 @@ const ProfilePage = () => {
     };
 
     const handleFriendsClick = () => {
-
+        setShowFriendsComponent(true);
+        setShowCirclesComponent(false);
     };
 
     return (
@@ -79,7 +81,7 @@ const ProfilePage = () => {
             </div>
             <div className='content-container'>
                 {showCirclesComponent && <CirclesComponent />}
-                {/* {showFriendsComponent && <FriendsComponent />} */}
+                {showFriendsComponent && <FriendsComponent />}
             </div>
         </div>
     )

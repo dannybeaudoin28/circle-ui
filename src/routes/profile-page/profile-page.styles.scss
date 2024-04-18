@@ -7,7 +7,7 @@
     min-height: 100vh; /* Minimum height of container equal to screen height */
 }
 
-.profile-container, .content-container {
+.profile-container {
     max-width: 600px;
     margin: 0 auto;
     padding: 20px;
@@ -18,7 +18,14 @@
 }
 
 .content-container {
+    max-width: 600px;
+    margin: 0 auto;
     margin-top: 2rem;
+    // padding: 20px;
+    // border: 1px solid #ccc;
+    // border-radius: 8px;
+    background-color: #f5f5f5; /* Light gray background */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .content-container p, h1 {
