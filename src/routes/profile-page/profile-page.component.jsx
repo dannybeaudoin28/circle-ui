@@ -3,6 +3,7 @@ import './profile-page.styles.css';
 import { jwtDecode } from 'jwt-decode';
 
 import axios from 'axios';
+import CirclesComponent from '../../components/circlies.component/circles.component';
 
 const ProfilePage = () => {
     const [token, setToken] = useState(null);
@@ -53,7 +54,8 @@ const ProfilePage = () => {
     }, [decodedToken]);
 
     const handleCircleClick = () => {
-
+        setShowCirclesComponent(true);
+        setShowFriendsComponent(false);
     };
 
     const handleFriendsClick = () => {
@@ -66,7 +68,7 @@ const ProfilePage = () => {
                 <h1 className="profile-name">
                     Welcome {user.userFName} {user.userMiddleInitial}. {user.userLName}
                 </h1>
-                {user.userImage && <img className='profile-image' src={`data:image/jpeg;base64,${user.userImage}`} alt=''/>}
+                {user.userImage && <img className='profile-image' src={`data:image/jpeg;base64,${user.userImage}`} alt='' />}
                 <p className="profile-email">
                     Is your email still: {user.userEmail}?
                 </p>
@@ -75,10 +77,12 @@ const ProfilePage = () => {
                 <button onClick={handleCircleClick}>Circles</button>
                 <button onClick={handleFriendsClick}>Friends</button>
             </div>
-            {/* {showCirclesComponent && <CirclesComponent />} */}
-            {/* {showFriendsComponent && <FriendsComponent />} */}
+            <div className='content-container'>
+                {showCirclesComponent && <CirclesComponent />}
+                {/* {showFriendsComponent && <FriendsComponent />} */}
+            </div>
         </div>
-    )    
+    )
 };
 
 export default ProfilePage;
