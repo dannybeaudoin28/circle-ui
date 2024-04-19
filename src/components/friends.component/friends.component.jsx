@@ -7,7 +7,7 @@ const FriendsComponent = ({ friends }) => {
         <div>
             <h1>Friends</h1>
             <li>
-                {friends.map((friend) => (
+                {friends && friends.map((friend) => (
                     <ul><FriendCard friend={friend}/></ul>
                 ))}
             </li>

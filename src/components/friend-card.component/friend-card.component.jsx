@@ -1,6 +1,7 @@
 import './friend-card.styles.scss';
 
 const FriendCard = ({ friend }) => {
+    const { userId } = friend;
     return (
         <a href={`/friend-page/${friend?.friendUser.userId}`}>
             <div className='container'>
@@ -17,7 +18,6 @@ const FriendCard = ({ friend }) => {
                 </div>
             </div>
         </a>
-
     );
 }
 

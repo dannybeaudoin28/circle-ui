@@ -45,7 +45,6 @@ const AdminPanel = () => {
     };
 
     const deleteUser = (id) => {
-        console.log('inside deleteUser' + id)
         axios.delete(baseUrl + '/users/delete-user/' + id, {
             headers: {
                 'Authorization': formattedToken,

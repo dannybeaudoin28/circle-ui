@@ -76,10 +76,10 @@ const ProfilePage = () => {
                 </h1>
                 {user.userImage && <img className='profile-image' src={`data:image/jpeg;base64,${user.userImage}`} alt='' />}
                 <p className="profile-email">
-                    Headline goes here
+                Passionate Innovator Seeking New Opportunities
                 </p>
                 <p className='profile-email'>
-                    Bio goes here
+                An avid seeker of knowledge and adventure, I thrive on exploring the intersections of technology, art, and humanity. With a passion for innovation and creativity, I am committed to continuous learning and growth. As a dedicated advocate for positive change, I leverage my skills to contribute meaningfully to society. Whether it's through writing, coding, or connecting with others, I strive to make a difference and inspire others to do the same. With a curious mind and an open heart, I embrace challenges as opportunities for growth and am always eager to embark on new journeys. Let's create, learn, and grow together.
                 </p>
             </div>
             <div className='button-container'>

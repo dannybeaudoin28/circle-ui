@@ -18,8 +18,6 @@ const LoginForm = ({ setIsAuthenticatedFromLogin }) => {
     })
 
     const handleChange = (event) => {
-        console.log('changing input')
-
         const name = event.target.name;
         const value = event.target.value;
         setLoginInputs(values => ({ ...values, [name]: value }))
@@ -40,28 +38,22 @@ const LoginForm = ({ setIsAuthenticatedFromLogin }) => {
                         console.log('Token is: ', token)
                         // Store the JWT in localStorage
                         localStorage.setItem('jwtToken', token);
-                        console.log('inside handleSubmit of LoginForm token is: ', localStorage.getItem('jwtToken'))
-
-                        // Optionally, you can decode the JWT to access its payload
-                        // const decodedToken = jwt_decode(token);
-                        // console.log(decodedToken);
-
-                        // Clear the login inputs
+                    
                         setLoginInputs({
                             userEmail: '',
                             userPassword: '',
                         });
 
                         navigate('/admin-panel');
+                    } else {
+                        setLoginInputs({
+                            userEmail: '',
+                            userPassword: '',
+                        });
                     }
-                    setLoginInputs({
-                        userEmail: '',
-                        userPassword: '',
-                    });
                 })
                 .catch(error => {
                     console.error('Login error:', error);
-                    // Handle login errors (e.g., display error message)
                 });
             };
         }

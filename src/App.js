@@ -7,6 +7,7 @@ import Home from './routes/home/home.component';
 import SignUp from './routes/sign-up/sign-up.component';
 import ProfilePage from './routes/profile-page/profile-page.component';
 import FriendPage from './routes/friend-page/friend-page.component';
+import ProfileSearch from './routes/profile-search/profile-search.component';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path='/profile-page' element={<ProfilePage />} />
         <Route path='/sign-up' element={<SignUp />} />
         <Route path='/friend-page/:friendId' element={<FriendPage />} />
+        <Route path='/profile-search/:searchString' element={<ProfileSearch />} />
       </Route>
     </Routes>
   );

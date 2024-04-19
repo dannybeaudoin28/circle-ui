@@ -66,3 +66,38 @@ export const MobileNav = styled.ul`
     display: flex;
   }
 `;
+
+export const SearchContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const SearchInput = styled.input`
+  background-color: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin-right: 0.5rem; /* Adjust margin as needed */
+  transition: all 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border-color: #bada55;
+  }
+`;
+
+export const SearchButton = styled.button`
+  background-color: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: #bada55;
+    border-color: #bada55;
+  }
+`;

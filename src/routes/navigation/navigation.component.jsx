@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 import {
   Nav,
@@ -8,12 +8,33 @@ import {
   Logo,
   MobileNavToggle,
   DesktopNav,
-  MobileNav
+  MobileNav,
+  SearchContainer,
+  SearchInput,
+  SearchButton,
 } from './navigation.styles'
 
 const Navigation = () => {
   const [isMobileNavOpen, setIsMobileNavOpen] = React.useState(false);
-  const [jwtToken, setJwtToken] = React.useState(localStorage.getItem('jwtToken'))
+  const [jwtToken, setJwtToken] = React.useState(localStorage.getItem('jwtToken'));
+
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const navigate = useNavigate();
+
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+    // search for users
+    // return list of users
+    // load component passing in list
+    // make each item clickable
+  };
+
+  const handleSearchSubmit = (event) => {
+    // event.preventDefault();
+    console.log('handleSearchSubmit clicked!');
+    navigate(`/profile-search/${searchQuery}`);
+  };
 
   const logout = () => {
     localStorage.setItem('jwtToken', '');
@@ -24,6 +45,17 @@ const Navigation = () => {
     <div>
       <Nav>
         <Logo>My Logo</Logo>
+        {jwtToken !== "" && (
+          <SearchContainer>
+            <SearchInput
+              type="text"
+              value={searchQuery}
+              onChange={handleSearchChange}
+              placeholder="Search..."
+            />
+            <SearchButton onClick={() => handleSearchSubmit()}>Search</SearchButton>
+          </SearchContainer>
+        )}
         <MobileNavToggle onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}>
           {isMobileNavOpen ? 'Close' : 'Menu'}
         </MobileNavToggle>
