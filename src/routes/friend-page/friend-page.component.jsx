@@ -1,6 +1,8 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
+import { useNavigate } from 'react-router-dom';
+
 import { jwtDecode } from 'jwt-decode';
 
 import axios from 'axios';
@@ -19,6 +21,8 @@ const FriendPage = () => {
     const [error, setError] = useState(null);
 
     const baseUrl = 'http://localhost:8888';
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         // Fetch your JWT from wherever it's stored (e.g., local storage, cookies, etc.)
@@ -88,6 +92,10 @@ const FriendPage = () => {
         }
     };
 
+    const messageFriend = (receiveId, sendId) => {
+        navigate(`/messenger/${sendId}/${receiveId}`);
+    };
+
     return (
         <div className='profile-background'>
             <div className='view-user-profile-container'>
@@ -97,7 +105,7 @@ const FriendPage = () => {
                 {user.userImage && <img className='profile-image' src={`data:image/jpeg;base64,${user.userImage}`} alt='' />}
                 <h3>Passionate Innovator Seeking New Opportunities</h3>
                 <p>An avid seeker of knowledge and adventure, I thrive on exploring the intersections of technology, art, and humanity. With a passion for innovation and creativity, I am committed to continuous learning and growth. As a dedicated advocate for positive change, I leverage my skills to contribute meaningfully to society. Whether it's through writing, coding, or connecting with others, I strive to make a difference and inspire others to do the same. With a curious mind and an open heart, I embrace challenges as opportunities for growth and am always eager to embark on new journeys. Let's create, learn, and grow together.</p>
-                <button className="button">Message</button>
+                <button className="button" onClick={() => messageFriend(user.userId, userId)}>Message</button>
                 <button className="button" onClick={() => addFriend(user.userId, userId)}>Add Friend</button>
             </div>
         </div>
