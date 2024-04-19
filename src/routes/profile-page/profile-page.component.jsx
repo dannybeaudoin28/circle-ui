@@ -11,6 +11,9 @@ const ProfilePage = () => {
     const [decodedToken, setDecodedToken] = useState(null);
     const [user, setUser] = useState([]);
 
+    //TODO: ADD Friends to pass to component
+    const [friends, setFriends] = useState([]);
+
     const [showCirclesComponent, setShowCirclesComponent] = useState(false);
     const [showFriendsComponent, setShowFriendsComponent] = useState(false);
 
@@ -37,14 +40,14 @@ const ProfilePage = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                console.log('testing')
                 const response = await axios.get(baseUrl + '/users/get-user-email/' + decodedToken.email, {
                     headers: {
                         'Authorization': `Bearer ` + token,
                     }
                 });
-                console.log('logging data inside fetchData: ', response);
+                console.log('logging data inside fetchData: ', response.data);
                 setUser(response.data);
+                setFriends(response.data.socialConnections);
                 setIsLoading(false);
             } catch (error) {
                 setError(error.message);
@@ -57,6 +60,7 @@ const ProfilePage = () => {
     const handleCircleClick = () => {
         setShowCirclesComponent(true);
         setShowFriendsComponent(false);
+        console.log('user is: ', user);
     };
 
     const handleFriendsClick = () => {
@@ -72,7 +76,10 @@ const ProfilePage = () => {
                 </h1>
                 {user.userImage && <img className='profile-image' src={`data:image/jpeg;base64,${user.userImage}`} alt='' />}
                 <p className="profile-email">
-                    Is your email still: {user.userEmail}?
+                    Headline goes here
+                </p>
+                <p className='profile-email'>
+                    Bio goes here
                 </p>
             </div>
             <div className='button-container'>
@@ -81,7 +88,7 @@ const ProfilePage = () => {
             </div>
             <div className='content-container'>
                 {showCirclesComponent && <CirclesComponent />}
-                {showFriendsComponent && <FriendsComponent />}
+                {showFriendsComponent && <FriendsComponent friends={friends}/>}
             </div>
         </div>
     )
