@@ -23,10 +23,10 @@ const ImgUploader = ({ handleDataFromImgUploader }) => {
     };
 
     return (
-        <div>
-            <h2>Add a profile image:</h2>
-            <input type='file' onChange={handleChange} />
-            {file && <img className='img-preview' src={`data:image/jpeg;base64,${file}`} alt=''/>}
+        <div className='profile-image-container'>
+            <h2 className='profile-image-heading'>Add a profile image:</h2>
+            <input className='profile-image-input' type='file' onChange={handleChange} />
+            {file && <img className='img-preview' src={`data:image/jpeg;base64,${file}`} alt='' />}
         </div>
     );
 };

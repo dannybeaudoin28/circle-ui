@@ -60,8 +60,12 @@ const Navigation = () => {
           {isMobileNavOpen ? 'Close' : 'Menu'}
         </MobileNavToggle>
         <DesktopNav>
-          <NavItem><a href="/home">Home</a></NavItem>
-          <NavItem><a href='/sign-up'>Sign Up</a> </NavItem>
+          {jwtToken === "" && (
+            <>
+              <NavItem><a href="/home">Home</a></NavItem>
+              <NavItem><a href='/sign-up'>Sign Up</a> </NavItem>
+            </>
+          )}
           {jwtToken !== "" && (
             <>
               <NavItem><a href="/admin-panel">Admin</a></NavItem>
@@ -71,8 +75,12 @@ const Navigation = () => {
           )}
         </DesktopNav>
         <MobileNav style={{ display: isMobileNavOpen ? 'flex' : 'none' }}>
-          <NavItem><a href="/home">Home</a></NavItem>
-          <NavItem><a href='/sign-up'>Sign Up</a> </NavItem>
+          {jwtToken === "" && (
+            <>
+              <NavItem><a href="/home">Home</a></NavItem>
+              <NavItem><a href='/sign-up'>Sign Up</a> </NavItem>
+            </>
+          )}
           {jwtToken !== "" && (
             <>
               <NavItem><a href="/admin-panel">Admin</a></NavItem>

@@ -97,36 +97,38 @@ const AdminPanel = () => {
                     <AddUserForm closeModal={closeModal} userId={userId} userData={user} formType="edit" />
                 </Modal>
             </div>
-            <div>
+            <div className='responsive-container'>
                 <div className='content'>
-                    <div>
+                    <div className='table-container'>
                         <h1>Users</h1>
-                        <table className='styled-table'>
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Email</th>
-                                    <th>First Name</th>
-                                    <th>Middle Initial</th>
-                                    <th>Last Name</th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {users && users.map((userData) => (
-                                    <tr key={userData.userId}>
-                                        <td>{userData.userId}</td>
-                                        <td>{userData.userEmail}</td>
-                                        <td>{userData.userFName}</td>
-                                        <td>{userData.userMiddleInitial}</td>
-                                        <td>{userData.userLName}</td>
-                                        <td><button onClick={() => editUser(userData)}>Edit</button></td>
-                                        <td><button onClick={() => deleteUser(userData.userId)}>Delete</button></td>
+                        <div className='table-scroll'>
+                            <table className='styled-table'>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Email</th>
+                                        <th>First Name</th>
+                                        <th>Middle Initial</th>
+                                        <th>Last Name</th>
+                                        <th>Edit</th>
+                                        <th>Delete</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    {users && users.map((userData) => (
+                                        <tr key={userData.userId}>
+                                            <td>{userData.userId}</td>
+                                            <td>{userData.userEmail}</td>
+                                            <td>{userData.userFName}</td>
+                                            <td>{userData.userMiddleInitial}</td>
+                                            <td>{userData.userLName}</td>
+                                            <td><button onClick={() => editUser(userData)}>Edit</button></td>
+                                            <td><button onClick={() => deleteUser(userData.userId)}>Delete</button></td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <div>
                         <AddUserForm formType={"add"} />
@@ -134,7 +136,6 @@ const AdminPanel = () => {
                 </div>
             </div>
         </div>
-
     );
 };
 
