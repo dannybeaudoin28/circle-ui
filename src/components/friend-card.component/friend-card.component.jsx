@@ -1,12 +1,19 @@
 import './friend-card.styles.scss';
 
 const FriendCard = ({ friend }) => {
-    console.log(friend?.friendUser.userEmail);
     return (
-        <div>
-            <p>{friend?.friendUser.userFName} {friend?.friendUser.userMiddleInitial} {friend?.friendUser.userLName}</p>
-            <p>{friend?.friendUser.userEmail}</p>
-            <hr/>
+        <div className='container'>
+            <div className='friend-card-container'>
+                <div className='friend-card'>
+                    <div className='friend-card-left'>
+                        <p>{friend?.friendUser.userFName} {friend?.friendUser.userMiddleInitial} {friend?.friendUser.userLName}</p>
+                        <p>{friend?.friendUser.userEmail}</p>
+                    </div>
+                </div>
+                <div className='friend-card-right'>
+                    {friend?.friendUser.userImage && <img className='profile-image' src={`data:image/jpeg;base64,${friend?.friendUser.userImage}`} alt='profile-img' />}
+                </div>
+            </div>
         </div>
     );
 }

@@ -1,12 +1,11 @@
 import FriendCard from '../friend-card.component/friend-card.component';
 import './friends.styles.scss';
 
-const FriendsComponent = ({friends}) => {
+const FriendsComponent = ({ friends }) => {
     console.log('friend: ', friends[0].friendUser);
     return (
         <div>
             <h1>Friends</h1>
-            <FriendCard />
             <li>
                 {friends.map((friend) => (
                     <ul><FriendCard friend={friend}/></ul>
