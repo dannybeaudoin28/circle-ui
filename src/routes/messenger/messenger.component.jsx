@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './messenger.styles.scss';
 
 import axios from 'axios';
@@ -6,18 +6,63 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
 const Messenger = () => {
+    const baseUrl = 'http://localhost:8888';
+    const jwtToken = localStorage.getItem('jwtToken');
+
     const { sendId, receiveId } = useParams();
     const [messages, setMessages] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const baseUrl = 'http://localhost:8888';
-    const jwtToken = localStorage.getItem('jwtToken');
+    const [inputs, setInputs] = useState({
+        messageBody: '',
+        messageSenderId: sendId,
+        messageReceiverId: receiveId
+    });
+
+    const messagesEndRef = useRef(null);
+
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    };
+
+    const handleChange = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+        setInputs(values => ({ ...values, [name]: value }))
+    }
+
+    const handleSubmit = (event) => {
+        const { messageBody } = inputs;
+
+        event.preventDefault();
+
+        if (messageBody.length > 0) {
+            axios.post(baseUrl + '/messages/post-message', inputs, {
+                headers: {
+                    'Authorization': `Bearer ` + jwtToken,
+                }
+            }).then(response => {
+                setMessages(messages => [...messages, response.data]);
+                setInputs({
+                    messageBody: '',
+                    messageSenderId: sendId,
+                    messageReceiverId: receiveId
+                })
+            }).catch(error => {
+                console.error('error: ', error);
+                setInputs({
+                    messageBody: '',
+                    messageSenderId: sendId,
+                    messageReceiverId: receiveId
+                })
+            })
+        };
+    }
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                console.log('testing')
                 const response = await axios.get(baseUrl + `/messages/get-messages/${sendId}/${receiveId}`, {
                     headers: {
                         'Authorization': `Bearer ${jwtToken}`,
@@ -36,24 +81,38 @@ const Messenger = () => {
         fetchData();
     }, [jwtToken]);
 
+    useEffect(() => {
+        scrollToBottom();
+    }, [messages]);
+
     return (
         <div className="messenger-container">
             <h1 className="messenger-title">Messenger</h1>
-            <ul className="message-list">
-                {messages && messages
-                    .map((message) => (
-                        <li
+            <div className="messages-container">
+                <div className="messages">
+                    {messages.map(message => (
+                        <div
                             key={message.messageId}
-                            className={`message-item ${message.messageReceiverId == receiveId ? 'receiver-message' : 'sender-message'}`}
+                            className={`message ${message.messageReceiverId == receiveId ? 'receiver' : 'sender'}`}
                         >
-
-                            <div className="message-text">{message.messageBody} {message.messageReceiverId}</div>
-                            <div className="message-timestamp">Timestamp: {message.timestamp}</div>
-                        </li>
+                            <div className="message-body">{message.messageBody}</div>
+                            <div className="message-timestamp">{message.timestamp}</div>
+                        </div>
                     ))}
-            </ul>
+                </div>
+            </div>
+            <form className="input-container" onSubmit={handleSubmit}>
+                <input
+                    type='text'
+                    name='messageBody'
+                    value={inputs.messageBody}
+                    onChange={handleChange}
+                    placeholder="Type a message..."
+                />
+                <button type='submit'>Send</button>
+            </form>
         </div>
-    );
+    );    
 }
 
 export default Messenger;

@@ -1,67 +1,77 @@
-/* Messenger container */
 .messenger-container {
-    max-width: 600px;
+    // max-width: 1000px;
     margin: 0 auto;
     padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    background-color: #f9f9f9;
+    background-color: #f2f2f2; /* Adjust to match your app's background color */
 }
 
-.messenger-background {
-    background-color: #132c33;
-    /* Deep blue background */
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-    color: #fff;
-    min-height: 100vh;
-    /* Minimum height of container equal to screen height */
-}
-
-/* Messenger title */
 .messenger-title {
-    font-size: 32px;
+    text-align: center;
     margin-bottom: 20px;
-    color: #333;
+    color: #333; /* Adjust to match your app's text color */
 }
 
-/* Message list */
-.message-list {
-    list-style-type: none;
-    padding: 0;
+.messages-container {
+    max-height: 400px; /* Set your preferred height */
+    overflow-y: auto;
 }
 
-/* Message item */
-.message-item {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 8px;
+.messages {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.message {
+    max-width: 70%;
     padding: 10px;
-    margin-bottom: 10px;
+    border-radius: 8px;
+    word-wrap: break-word;
+    background-color: #e0e0e0; /* Adjust to match your app's message background color */
 }
 
-/* Sender's message */
-.sender-message {
-    padding-left: 20rem;
-    background-color: #DCF8C6;
-    /* Light green */
+.sender {
+    background-color: #64b5f6; /* Adjust to match your app's sender message color */
+    color: #fff; /* Adjust to match your app's sender message text color */
+    align-self: flex-start;
 }
 
-/* Receiver's message */
-.receiver-message {
-    background-color: #E6E6FA;
-    /* Lavender */
+.receiver {
+    background-color: #fff; /* Adjust to match your app's receiver message color */
+    color: #333; /* Adjust to match your app's receiver message text color */
+    align-self: flex-end;
 }
 
-/* Message text */
-.message-text {
-    font-size: 16px;
-    color: #333;
+.message-body {
+    margin-bottom: 5px;
 }
 
-/* Message timestamp */
 .message-timestamp {
     font-size: 12px;
-    color: #888;
+    color: #777; /* Adjust to match your app's timestamp color */
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.input-container input[type='text'] {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+}
+
+.input-container button[type='submit'] {
+    padding: 10px 20px;
+    background-color: #2196f3; /* Adjust to match your app's send button color */
+    color: #fff; /* Adjust to match your app's send button text color */
+    border: none;
+    border-radius: 20px;
+    margin-left: 10px;
+    cursor: pointer;
+    outline: none;
 }
