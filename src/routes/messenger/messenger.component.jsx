@@ -23,7 +23,8 @@ const Messenger = () => {
                         'Authorization': `Bearer ${jwtToken}`,
                     }
                 });
-                console.log('logging data inside fetchData: ', response.data);
+                console.log('logging data inside fetchData in messenger: ', response.data);
+                console.log('also logging receiveId: ', receiveId);
                 setMessages(response.data);
                 setIsLoading(false);
             } catch (error) {
@@ -36,13 +37,19 @@ const Messenger = () => {
     }, [jwtToken]);
 
     return (
-        <div>
-            <h1>Messenger</h1>
-            <ul>
+        <div className="messenger-container">
+            <h1 className="messenger-title">Messenger</h1>
+            <ul className="message-list">
                 {messages && messages
-                    .filter(message => message.messageReceiver.userId !== receiveId)
                     .map((message) => (
-                        <li key={message.messageId}>{message.messageBody}</li>
+                        <li
+                            key={message.messageId}
+                            className={`message-item ${message.messageReceiverId == receiveId ? 'receiver-message' : 'sender-message'}`}
+                        >
+
+                            <div className="message-text">{message.messageBody} {message.messageReceiverId}</div>
+                            <div className="message-timestamp">Timestamp: {message.timestamp}</div>
+                        </li>
                     ))}
             </ul>
         </div>
