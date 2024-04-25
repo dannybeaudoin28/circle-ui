@@ -38,6 +38,10 @@ const Navigation = () => {
 
   const logout = () => {
     localStorage.setItem('jwtToken', '');
+    localStorage.setItem('isAuthenticated', false);
+    const isAuth = localStorage.getItem('isAuthenticated');
+
+    console.log('inside logout isAuth is: '. isAuth);
     setJwtToken(localStorage.getItem('jwtToken'));
   };
 

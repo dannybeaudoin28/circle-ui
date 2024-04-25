@@ -3,10 +3,11 @@ import LoginForm from "../../components/forms/login-form.component/login-form.co
 
 const Home = () => {
     //TODO: create conditional logic to render a different component based on users authenticated status
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem("isAuthenticated") === "true");
 
     const setIsAuthenticatedFromLogin = (data) => {
         setIsAuthenticated(data);
+        localStorage.setItem('isAuthenticated', data);
     };
 
     return (
