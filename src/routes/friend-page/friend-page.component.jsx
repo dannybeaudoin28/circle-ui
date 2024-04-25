@@ -9,6 +9,8 @@ import axios from 'axios';
 
 import './friend-page.styles.scss';
 
+import Cookies from 'js-cookie';
+
 const FriendPage = () => {
     const { friendId } = useParams();
 
@@ -26,7 +28,7 @@ const FriendPage = () => {
 
     useEffect(() => {
         // Fetch your JWT from wherever it's stored (e.g., local storage, cookies, etc.)
-        const jwt = localStorage.getItem('jwtToken');
+        const jwt = Cookies.get('jwtToken'); 
 
         if (jwt) {
             // Decode the JWT

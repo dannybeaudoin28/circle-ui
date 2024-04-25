@@ -6,6 +6,8 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import AddUserForm from '../../components/forms/add-user-form.component/add-user-form.component';
 
+import Cookies from 'js-cookie';
+
 import Modal from 'react-modal';
 
 const AdminPanel = () => {
@@ -17,7 +19,7 @@ const AdminPanel = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const jwtToken = localStorage.getItem('jwtToken');
+    const jwtToken = Cookies.get('jwtToken'); 
     const formattedToken = jwtToken ? 'Bearer ' + jwtToken : '';
 
     const baseUrl = 'http://localhost:8888';

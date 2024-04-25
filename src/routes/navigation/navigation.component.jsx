@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 import { Outlet, useNavigate } from 'react-router-dom';
 
+import Cookies from 'js-cookie';
+
 import {
   Nav,
   NavItem,
@@ -15,8 +17,10 @@ import {
 } from './navigation.styles'
 
 const Navigation = () => {
-  const [isMobileNavOpen, setIsMobileNavOpen] = React.useState(false);
-  const [jwtToken, setJwtToken] = React.useState(localStorage.getItem('jwtToken'));
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+  const [jwtToken, setJwtToken] = useState(Cookies.get('jwtToken')); 
+
+  console.log('inside nav jwt is: ', jwtToken);
 
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -37,12 +41,9 @@ const Navigation = () => {
   };
 
   const logout = () => {
-    localStorage.setItem('jwtToken', '');
+    Cookies.remove('jwtToken');
     localStorage.setItem('isAuthenticated', false);
-    const isAuth = localStorage.getItem('isAuthenticated');
-
-    console.log('inside logout isAuth is: '. isAuth);
-    setJwtToken(localStorage.getItem('jwtToken'));
+    setJwtToken(Cookies.get('jwtToken') || '');
   };
 
   return (
@@ -64,13 +65,13 @@ const Navigation = () => {
           {isMobileNavOpen ? 'Close' : 'Menu'}
         </MobileNavToggle>
         <DesktopNav>
-          {jwtToken === "" && (
+          {jwtToken === undefined && (
             <>
               <NavItem><a href="/home">Home</a></NavItem>
               <NavItem><a href='/sign-up'>Sign Up</a> </NavItem>
             </>
           )}
-          {jwtToken !== "" && (
+          {jwtToken !== undefined && (
             <>
               <NavItem><a href="/admin-panel">Admin</a></NavItem>
               <NavItem><a href='/profile-page'>My Profile</a></NavItem>
@@ -79,13 +80,13 @@ const Navigation = () => {
           )}
         </DesktopNav>
         <MobileNav style={{ display: isMobileNavOpen ? 'flex' : 'none' }}>
-          {jwtToken === "" && (
+          {jwtToken === undefined && (
             <>
               <NavItem><a href="/home">Home</a></NavItem>
               <NavItem><a href='/sign-up'>Sign Up</a> </NavItem>
             </>
           )}
-          {jwtToken !== "" && (
+          {jwtToken !== undefined && (
             <>
               <NavItem><a href="/admin-panel">Admin</a></NavItem>
               <NavItem><a href='/profile-page'>My Profile</a></NavItem>

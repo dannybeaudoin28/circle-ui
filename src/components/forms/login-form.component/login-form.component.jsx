@@ -3,7 +3,11 @@ import './login-form.styles.scss';
 
 import { useNavigate } from 'react-router-dom';
 
+import { jwtDecode } from 'jwt-decode';
+
 import axios from 'axios';
+
+import Cookies from 'js-cookie';
 
 
 const LoginForm = ({ setIsAuthenticatedFromLogin }) => {
@@ -34,11 +38,15 @@ const LoginForm = ({ setIsAuthenticatedFromLogin }) => {
                     // Extract the JWT from the response
                     const token = response.data;
 
-                    if (token != 'Incorrect login') {
-                        console.log('Token is: ', token)
-                        // Store the JWT in localStorage
-                        localStorage.setItem('jwtToken', token);
-                    
+                    if (token !== 'Incorrect login') {
+                        const decoded = jwtDecode(token);
+
+                        // Convert Unix timestamp to milliseconds since the epoch
+                        const expTime = decoded.exp * 1000;
+
+                        // Set JWT token as a session cookie with expiry time
+                        Cookies.set('jwtToken', token, { expires: new Date(expTime) });
+
                         setLoginInputs({
                             userEmail: '',
                             userPassword: '',
@@ -46,7 +54,7 @@ const LoginForm = ({ setIsAuthenticatedFromLogin }) => {
 
                         setIsAuthenticatedFromLogin(true);
 
-                        navigate('/admin-panel');
+                        navigate('/profile-page');
                     } else {
                         setLoginInputs({
                             userEmail: '',
@@ -57,35 +65,35 @@ const LoginForm = ({ setIsAuthenticatedFromLogin }) => {
                 .catch(error => {
                     console.error('Login error:', error);
                 });
-            };
-        }
+        };
+    }
 
 
-        return (
-            <div className='form-box'>
-                <form onSubmit={handleSubmit}>
-                    <label>Email
-                        <input
-                            type="email"
-                            name="userEmail"
-                            value={loginInputs.userEmail}
-                            onChange={handleChange}
-                            placeholder='User Email'
-                        />
-                    </label>
-                    <label>Password
-                        <input
-                            type="password"
-                            name="userPassword"
-                            value={loginInputs.userPassword}
-                            onChange={handleChange}
-                            placeholder='**********'
-                        />
-                    </label>
-                    <input className='submitButton' type='submit' value='Login' />
-                </form>
-            </div>
-        );
-    };
+    return (
+        <div className='form-box'>
+            <form onSubmit={handleSubmit}>
+                <label>Email
+                    <input
+                        type="email"
+                        name="userEmail"
+                        value={loginInputs.userEmail}
+                        onChange={handleChange}
+                        placeholder='User Email'
+                    />
+                </label>
+                <label>Password
+                    <input
+                        type="password"
+                        name="userPassword"
+                        value={loginInputs.userPassword}
+                        onChange={handleChange}
+                        placeholder='**********'
+                    />
+                </label>
+                <input className='submitButton' type='submit' value='Login' />
+            </form>
+        </div>
+    );
+};
 
-    export default LoginForm;
+export default LoginForm;

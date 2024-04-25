@@ -5,9 +5,11 @@ import axios from 'axios';
 
 import { useParams } from 'react-router-dom';
 
+import Cookies from 'js-cookie';
+
 const Messenger = () => {
     const baseUrl = 'http://localhost:8888';
-    const jwtToken = localStorage.getItem('jwtToken');
+    const jwtToken = Cookies.get('jwtToken'); 
 
     const { sendId, receiveId } = useParams();
     const [messages, setMessages] = useState([]);

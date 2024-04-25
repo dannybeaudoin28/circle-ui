@@ -6,6 +6,8 @@ import axios from 'axios';
 import CirclesComponent from '../../components/circlies.component/circles.component';
 import FriendsComponent from '../../components/friends.component/friends.component';
 
+import Cookies from 'js-cookie';
+
 const ProfilePage = () => {
     const [token, setToken] = useState(null);
     const [decodedToken, setDecodedToken] = useState(null);
@@ -25,8 +27,7 @@ const ProfilePage = () => {
 
 
     useEffect(() => {
-        // Fetch your JWT from wherever it's stored (e.g., local storage, cookies, etc.)
-        const jwt = localStorage.getItem('jwtToken');
+        const jwt = Cookies.get('jwtToken'); 
 
         if (jwt) {
             // Decode the JWT

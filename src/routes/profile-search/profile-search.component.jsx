@@ -7,6 +7,8 @@ import './profile-search.styles.scss';
 import FriendCard from '../../components/friend-card.component/friend-card.component';
 import UserCard from '../../components/user-card.component/user-card.component';
 
+import Cookies from 'js-cookie';
+
 const ProfileSearch = () => {
     const [token, setToken] = useState(null);
     const [results, setResults] = useState([]);
@@ -20,8 +22,7 @@ const ProfileSearch = () => {
 
     useEffect(() => {
         // Fetch your JWT from wherever it's stored (e.g., local storage, cookies, etc.)
-        const jwt = localStorage.getItem('jwtToken');
-
+        const jwt = Cookies.get('jwtToken'); 
         if (jwt) {
             setToken(jwt);
         }

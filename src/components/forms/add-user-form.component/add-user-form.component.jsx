@@ -6,12 +6,14 @@ import { useNavigate } from 'react-router-dom';
 import './add-user-form.styles.scss';
 import ImgUploader from '../../img-uploader.component/img-uploader.component';
 
+import Cookies from 'js-cookie';
+
 const AddUserForm = ({ formType, userId, closeModal, userData }) => {
     const [fileData, setFileData] = useState('');
     const baseUrl = 'http://localhost:8888';
     const navigate = useNavigate();
 
-    const jwtToken = localStorage.getItem('jwtToken');
+    const jwtToken = Cookies.get('jwtToken'); 
     const formattedToken = jwtToken ? 'Bearer ' + jwtToken : '';
 
     const [inputs, setInputs] = useState({
