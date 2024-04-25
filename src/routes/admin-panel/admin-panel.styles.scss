@@ -1,7 +1,10 @@
 .responsive-container {
     width: 100%;
     overflow-x: auto; /* Add horizontal scroll */
+
 }
+
+
 
 .content {
     display: flex;
@@ -12,21 +15,21 @@
 
 .table-container {
     margin-bottom: 20px;
-    width: 100%;
+    // width: 100%;
 }
 
 .styled-table {
     border-collapse: collapse;
     margin: 25px 0;
-    font-size: 0.9em;
-    font-family: sans-serif;
+    font-size: 16px; /* Adjust font size */
+    font-family: Arial, sans-serif; /* Adjust font family */
     min-width: 400px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
 .styled-table thead tr {
-    background-color: #009879;
-    color: #ffffff;
+    background-color: #007bff; /* Adjust table header background color */
+    color: #ffffff; /* Adjust table header text color */
     text-align: left;
 }
 
@@ -49,4 +52,20 @@ h1 {
 
 .table-scroll {
     overflow-x: auto; /* Add horizontal scroll */
+}
+
+.button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px; /* Adjust font size */
+    cursor: pointer;
+    margin: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #0056b3;
 }

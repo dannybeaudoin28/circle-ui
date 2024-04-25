@@ -24,7 +24,7 @@ const LoginForm = ({ setIsAuthenticatedFromLogin }) => {
     const handleChange = (event) => {
         const name = event.target.name;
         const value = event.target.value;
-        setLoginInputs(values => ({ ...values, [name]: value }))
+        setLoginInputs(values => ({ ...values, [name]: value }));
     };
 
     const handleSubmit = (event) => {
@@ -40,11 +40,8 @@ const LoginForm = ({ setIsAuthenticatedFromLogin }) => {
 
                     if (token !== 'Incorrect login') {
                         const decoded = jwtDecode(token);
-
-                        // Convert Unix timestamp to milliseconds since the epoch
                         const expTime = decoded.exp * 1000;
 
-                        // Set JWT token as a session cookie with expiry time
                         Cookies.set('jwtToken', token, { expires: new Date(expTime) });
 
                         setLoginInputs({
@@ -67,7 +64,6 @@ const LoginForm = ({ setIsAuthenticatedFromLogin }) => {
                 });
         };
     }
-
 
     return (
         <div className='form-box'>

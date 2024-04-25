@@ -19,7 +19,7 @@ const AdminPanel = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const jwtToken = Cookies.get('jwtToken'); 
+    const jwtToken = Cookies.get('jwtToken');
     const formattedToken = jwtToken ? 'Bearer ' + jwtToken : '';
 
     const baseUrl = 'http://localhost:8888';
@@ -56,6 +56,10 @@ const AdminPanel = () => {
         }).catch(error => {
             console.error(error);
         });
+    };
+
+    const updateUserList = (newUser) => {
+        setUsers([...users, newUser]);
     };
 
     useEffect(() => {
@@ -95,7 +99,7 @@ const AdminPanel = () => {
                     user={user}
                     style={customStyles}
                 >
-                    <button onClick={closeModal}>Cancel</button>
+                    <button className="button" onClick={closeModal}>Cancel</button>
                     <AddUserForm closeModal={closeModal} userId={userId} userData={user} formType="edit" />
                 </Modal>
             </div>
@@ -112,6 +116,7 @@ const AdminPanel = () => {
                                         <th>First Name</th>
                                         <th>Middle Initial</th>
                                         <th>Last Name</th>
+                                        <th>Image</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
                                     </tr>
@@ -124,8 +129,10 @@ const AdminPanel = () => {
                                             <td>{userData.userFName}</td>
                                             <td>{userData.userMiddleInitial}</td>
                                             <td>{userData.userLName}</td>
-                                            <td><button onClick={() => editUser(userData)}>Edit</button></td>
-                                            <td><button onClick={() => deleteUser(userData.userId)}>Delete</button></td>
+                                            {userData?.userImage && <td><img className='profile-image' src={`data:image/jpeg;base64,${userData.userImage}`} alt='profile-img' /></td>}
+                                            {userData?.userImage == '' && <td><p>No Profile Image</p></td>}
+                                            <td><button className="button" onClick={() => editUser(userData)}>Edit</button></td>
+                                            <td><button className="button" onClick={() => deleteUser(userData.userId)}>Delete</button></td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -133,7 +140,7 @@ const AdminPanel = () => {
                         </div>
                     </div>
                     <div>
-                        <AddUserForm formType={"add"} />
+                        <AddUserForm formType={"add"} isAdmin={true} updateUserList={updateUserList} />
                     </div>
                 </div>
             </div>

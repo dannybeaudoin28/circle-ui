@@ -8,7 +8,7 @@ import ImgUploader from '../../img-uploader.component/img-uploader.component';
 
 import Cookies from 'js-cookie';
 
-const AddUserForm = ({ formType, userId, closeModal, userData }) => {
+const AddUserForm = ({ formType, userId, closeModal, userData, updateUserList, isAdmin }) => {
     const [fileData, setFileData] = useState('');
     const baseUrl = 'http://localhost:8888';
     const navigate = useNavigate();
@@ -44,7 +44,6 @@ const AddUserForm = ({ formType, userId, closeModal, userData }) => {
             if (userFName && userLName && userMiddleInitial && userEmail && userPassword && userPassword === userConfirmPassword) {
                 if (fileData) {
                     inputs.userImage = fileData;
-                    console.log(inputs.userImage);
                 }
                 axios.post(baseUrl + '/users/post-user', inputs, {
                     headers: {
@@ -53,6 +52,7 @@ const AddUserForm = ({ formType, userId, closeModal, userData }) => {
                 })
                     .then(response => {
                         console.log(`Added user to records`);
+                        if (isAdmin) updateUserList(response.data);
                         setInputs({
                             userFName: '',
                             userLName: '',
@@ -82,6 +82,9 @@ const AddUserForm = ({ formType, userId, closeModal, userData }) => {
                 })
                     .then(response => {
                         console.log(`Edited user with id: ` + userId);
+
+                        updateUserList(response.data)
+
                         setInputs({
                             userFName: '',
                             userLName: '',
@@ -110,7 +113,7 @@ const AddUserForm = ({ formType, userId, closeModal, userData }) => {
                 <h1>Edit a user</h1>
             )}
             {formType === 'create' && (
-                <h1>Create an account to find your cirle today!</h1>
+                <h1>Create an account to find your circle today!</h1>
             )}
             <form onSubmit={handleSubmit}>
                 <label>First Name
@@ -183,7 +186,7 @@ const AddUserForm = ({ formType, userId, closeModal, userData }) => {
                 )}
             </form>
         </div>
-    );
+    );    
 }
 
 export default AddUserForm;
