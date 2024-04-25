@@ -16,6 +16,7 @@ export const NavItem = styled.li`
   a {
     color: #fff;
     text-decoration: none;
+    font-weight: 600;
     transition: all 0.3s ease;
 
     &:hover {
@@ -73,23 +74,24 @@ export const SearchContainer = styled.div`
 `;
 
 export const SearchInput = styled.input`
-  background-color: transparent;
-  border: 1px solid #fff;
+  background-color: #444;
+  border: 1px solid #666;
   color: #fff;
   padding: 0.5rem;
   border-radius: 4px;
-  margin-right: 0.5rem; /* Adjust margin as needed */
+  margin-right: 0.5rem;
   transition: all 0.3s ease;
 
   &:focus {
     outline: none;
     border-color: #bada55;
+    background-color: #555;
   }
 `;
 
 export const SearchButton = styled.button`
-  background-color: transparent;
-  border: 1px solid #fff;
+  background-color: #444;
+  border: 1px solid #666;
   color: #fff;
   padding: 0.5rem 1rem;
   border-radius: 4px;
@@ -97,7 +99,7 @@ export const SearchButton = styled.button`
   transition: all 0.3s ease;
 
   &:hover {
-    background-color: #bada55;
+    background-color: #555;
     border-color: #bada55;
   }
 `;

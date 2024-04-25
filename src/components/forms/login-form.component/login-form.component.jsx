@@ -44,6 +44,8 @@ const LoginForm = ({ setIsAuthenticatedFromLogin }) => {
                             userPassword: '',
                         });
 
+                        setIsAuthenticatedFromLogin(true);
+
                         navigate('/admin-panel');
                     } else {
                         setLoginInputs({

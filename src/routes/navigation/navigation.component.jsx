@@ -44,7 +44,7 @@ const Navigation = () => {
   return (
     <div>
       <Nav>
-        <Logo>My Logo</Logo>
+        <Logo>Circles</Logo>
         {jwtToken !== "" && (
           <SearchContainer>
             <SearchInput
